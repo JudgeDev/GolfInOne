@@ -16,7 +16,7 @@ struct MainView: View {
                     SwingView()
                 } label: {
                     HStack {
-                        Image(systemName:  "figure.golf")
+                        Image("swing")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 60, height: 60)
@@ -28,12 +28,11 @@ struct MainView: View {
                         }
                     }
                 }
-                /*
                 NavigationLink {
                     LearnView()
                 } label: {
                     HStack {
-                        Image(systemName:  "document.on.document")
+                        Image("rules")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 60, height: 60)
@@ -65,7 +64,7 @@ struct MainView: View {
                     LearnView()
                 } label: {
                     HStack {
-                        Image(systemName:  "figure.cross.training")
+                        Image("fitness")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 60, height: 60)
@@ -81,7 +80,7 @@ struct MainView: View {
                     LearnView()
                 } label: {
                     HStack {
-                        Image(systemName:  "digitalcrown.arrow.clockwise")
+                        Image("practice")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 60, height: 60)
@@ -97,7 +96,23 @@ struct MainView: View {
                     LearnView()
                 } label: {
                     HStack {
-                        Image(systemName:  "graduationcap")
+                        Image("driver")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: 60, height: 60)
+                        VStack(alignment: .leading) {
+                            Text("Driving")
+                                .font(.headline)
+                            Text("Shots over 200 (hopefully)...")
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+                NavigationLink {
+                    LearnView()
+                } label: {
+                    HStack {
+                        Image("iron")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 60, height: 60)
@@ -113,7 +128,7 @@ struct MainView: View {
                     LearnView()
                 } label: {
                     HStack {
-                        Image(systemName:  "graduationcap")
+                        Image("putter")
                             .resizable()
                             .scaledToFit()
                             .frame(width: 60, height: 60)
@@ -129,7 +144,7 @@ struct MainView: View {
                     LearnView()
                 } label: {
                     HStack {
-                        Image(systemName:  "graduationcap")
+                        Image("sand")
                             .resizable()
                             .scaledToFill()
                             .frame(width: 60, height: 60)
@@ -141,7 +156,6 @@ struct MainView: View {
                         }
                     }
                 }
-                 */
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
                     Button("Preferences", systemImage: "person.crop.circle") {
