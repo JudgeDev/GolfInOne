@@ -127,7 +127,7 @@ struct MainView: View {
                     }
                 }
                 NavigationLink {
-                    PuttingBlockListView(bleManager: bleManager)
+                    PuttingBlockListView(/*bleManager: bleManager*/)
                 } label: {
                     HStack {
                         Image("putter")

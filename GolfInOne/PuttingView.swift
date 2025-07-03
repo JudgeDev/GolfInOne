@@ -428,11 +428,13 @@ struct PuttingBlockView: View {
 
 // MARK: - Block List View
 struct PuttingBlockListView: View {
-    @ObservedObject var bleManager: BLEManager
+    //@ObservedObject var bleManager: BLEManager
 
     @AppStorage("refreshInterval") var refreshInterval: Double = 1.0
     @State private var displayedFrame: SensorFrame?
     @State private var timer: Timer?
+
+    @ObservedObject private var sensorData = SensorDataStore.shared
 
     var body: some View {
         NavigationStack {
@@ -482,7 +484,9 @@ struct PuttingBlockListView: View {
     func startPolling() {
         timer?.invalidate()
         timer = Timer.scheduledTimer(withTimeInterval: refreshInterval, repeats: true) { _ in
-            displayedFrame = bleManager.latestSensorFrame
+            displayedFrame = sensorData.latestFrame
+
+            //displayedFrame = bleManager.latestSensorFrame
         }
     }
 }
@@ -491,5 +495,5 @@ struct PuttingBlockListView: View {
 
 // MARK: - Preview
 #Preview {
-    PuttingBlockListView(bleManager: BLEManager())
+    PuttingBlockListView(/*bleManager: BLEManager()*/)
 }

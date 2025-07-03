@@ -33,7 +33,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
     @Published var discoveredPeripherals: [CBPeripheral] = []
     @Published var connectedPeripheral: CBPeripheral?
     var discoveredCharacteristics: [CBUUID: CBCharacteristic] = [:]
-    @Published var latestSensorFrame: SensorFrame?  // frame of sensor data that can be used by other files
+    //@Published var latestSensorFrame: SensorFrame?  // frame of sensor data that can be used by other files
     
     override init() {
         super.init()
@@ -113,7 +113,7 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
         
 
         guard let data = characteristic.value else { return }
-        print("Received \(data.count) bytes: \(data.map { String(format: "%02X", $0) }.joined(separator: " "))")
+        //print("Received \(data.count) bytes: \(data.map { String(format: "%02X", $0) }.joined(separator: " "))")
 
         guard data.count >= 20 else {
             print("Received short packet")
@@ -161,9 +161,12 @@ class BLEManager: NSObject, ObservableObject, CBCentralManagerDelegate, CBPeriph
                 yaw: Double(yaw) * angleScale
             )
         )
-        DispatchQueue.main.async {
-            self.latestSensorFrame = frame
-        }
+        // update data frame in publisher
+        SensorDataStore.shared.update(with: frame)
+
+        //DispatchQueue.main.async {
+        //    self.latestSensorFrame = frame
+        //}
 
         /*
         print("""
