@@ -125,7 +125,7 @@ struct MainView: View {
                     }
                 }
                 NavigationLink {
-                    LearnView()
+                    PuttingBlockListView()
                 } label: {
                     HStack {
                         Image("putter")
