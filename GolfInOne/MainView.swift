@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct MainView: View {
+    // TODO - move this variable to environment?
+    @StateObject var bleManager = BLEManager()
     
     var body: some View {
         NavigationStack {
@@ -125,7 +127,7 @@ struct MainView: View {
                     }
                 }
                 NavigationLink {
-                    PuttingBlockListView()
+                    PuttingBlockListView(bleManager: bleManager)
                 } label: {
                     HStack {
                         Image("putter")
@@ -158,12 +160,23 @@ struct MainView: View {
                 }
                 .toolbar {
                     ToolbarItem(placement: .topBarTrailing) {
-                    Button("Preferences", systemImage: "person.crop.circle") {
+                        NavigationLink(destination: PreferencesView()) {
+                            Image(systemName: "person.crop.circle")
+                        }
                     }
-                }
+
+                    ToolbarItem(placement: .topBarTrailing) {
+                        NavigationLink(
+                            destination: SettingsView(bleManager: bleManager)
+                        ) {
+                            Image(systemName: "gearshape")
+                        }
+                    }
+                    /* use to edit selections - will not be required here??
                     ToolbarItem(placement: .topBarLeading) {
                         EditButton()
                     }
+                     */
                 }
             }
             .navigationTitle("Topics")

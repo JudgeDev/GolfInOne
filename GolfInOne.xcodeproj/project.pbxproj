@@ -24,6 +24,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		630B98632E16709C004712C0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		63F2F6A02E0598D6002D48E2 /* GolfInOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GolfInOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F2F6B02E0598D8002D48E2 /* GolfInOneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GolfInOneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		63F2F6BA2E0598D8002D48E2 /* GolfInOneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GolfInOneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -75,6 +76,7 @@
 		63F2F6972E0598D6002D48E2 = {
 			isa = PBXGroup;
 			children = (
+				630B98632E16709C004712C0 /* Info.plist */,
 				63F2F6A22E0598D6002D48E2 /* GolfInOne */,
 				63F2F6B32E0598D8002D48E2 /* GolfInOneTests */,
 				63F2F6BD2E0598D8002D48E2 /* GolfInOneUITests */,

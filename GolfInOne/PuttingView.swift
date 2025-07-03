@@ -174,6 +174,7 @@ let sampleBlocks: [PuttingBlock] = [
         subblocks: nil
     ),
 */
+    /*
     PuttingBlock(
         title: "Putter Fit",
         summary: "Adjust putter to your natural stance.",
@@ -281,12 +282,13 @@ let sampleBlocks: [PuttingBlock] = [
         learningOrder: 14,
         subblocks: nil
     )
+     */
 ]
 
 
 
 
-/*
+/* old code to check for useful content
     PuttingBlock(
         title: "Path",
         summary: "Understanding and controlling the stroke arc.",
@@ -426,25 +428,68 @@ struct PuttingBlockView: View {
 
 // MARK: - Block List View
 struct PuttingBlockListView: View {
+    @ObservedObject var bleManager: BLEManager
+
+    @AppStorage("refreshInterval") var refreshInterval: Double = 1.0
+    @State private var displayedFrame: SensorFrame?
+    @State private var timer: Timer?
+
     var body: some View {
         NavigationStack {
-            List(sampleBlocks.sorted { $0.learningOrder < $1.learningOrder }) { block in
-                NavigationLink(destination: PuttingBlockView(block: block)) {
-                    VStack(alignment: .leading) {
-                        Text("Step \(block.learningOrder): \(block.title)")
-                            .font(.headline)
-                        Text(block.summary)
-                            .font(.caption)
-                            .foregroundColor(.secondary)
+            List {
+                // Section 1: Putting Blocks
+                Section(header: Text("Learning Steps")) {
+                    ForEach(sampleBlocks.sorted(by: { $0.learningOrder < $1.learningOrder })) { block in
+                        NavigationLink(destination: PuttingBlockView(block: block)) {
+                            VStack(alignment: .leading) {
+                                Text("Step \(block.learningOrder): \(block.title)")
+                                    .font(.headline)
+                                Text(block.summary)
+                                    .font(.caption)
+                                    .foregroundColor(.secondary)
+                            }
+                        }
                     }
+                }
+                
+                // Section 2: Sensor Frame (for testing)
+                Section(header: Text("Live Sensor Data")) {
+                    if let frame = displayedFrame {
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text("Accel: x: \(frame.acceleration.x, specifier: "%.2f")g, y: \(frame.acceleration.y, specifier: "%.2f")g, z: \(frame.acceleration.z, specifier: "%.2f")g")
+                            Text("Gyro: x: \(frame.gyro.x, specifier: "%.2f")°/s, y: \(frame.gyro.y, specifier: "%.2f")°/s, z: \(frame.gyro.z, specifier: "%.2f")°/s")
+                            Text("Angle: roll: \(frame.angle.roll, specifier: "%.2f")°, pitch: \(frame.angle.pitch, specifier: "%.2f")°, yaw: \(frame.angle.yaw, specifier: "%.2f")°")
+                        }
+                    } else {
+                        Text("Waiting for sensor data...")
+                            .foregroundColor(.gray)
+                    }
+                }
+                .onAppear {
+                    startPolling()
+                }
+                .onDisappear {
+                    timer?.invalidate()
+                }
+                .onChange(of: refreshInterval) { _ in
+                    startPolling()
                 }
             }
             .navigationTitle("Putting Blocks")
         }
     }
+    
+    func startPolling() {
+        timer?.invalidate()
+        timer = Timer.scheduledTimer(withTimeInterval: refreshInterval, repeats: true) { _ in
+            displayedFrame = bleManager.latestSensorFrame
+        }
+    }
 }
+
+
 
 // MARK: - Preview
 #Preview {
-    PuttingBlockListView()
+    PuttingBlockListView(bleManager: BLEManager())
 }
